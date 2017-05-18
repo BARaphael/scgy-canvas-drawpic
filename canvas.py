@@ -54,6 +54,9 @@ def color_to_int(color):
 def int_to_color(n):
     return n>>16,(n>>8)%256,n%256
 
+def diff(c1,c2):
+    return abs(c1[0]-c2[0])+abs(c1[1]-c2[1])+abs(c1[2]-c2[2])
+
 def modify_to(pic,x,y):
     c=Canvas()
     while True:
@@ -62,10 +65,12 @@ def modify_to(pic,x,y):
             for j in range(pic.height):
                 if x+i>=0 and x+i<300 and y+j>=0 and y+j<300:
                     if c.data[x+i][y+j]!=pic.getpixel((i,j)):
-                        diffs.append((i,j))
+                        diffs.append((i,j,diff(c.data[x+i][y+j],pic.getpixel((i,j)))))
         print("Diff count =",len(diffs))
         if diffs:
-            pi,pj=random.choice(diffs)
+            maxdiff=max([d for _,_,d in diffs])
+            print("maxdiff =",maxdiff)
+            pi,pj=random.choice([(i,j) for i,j,d in diffs if d==maxdiff])
             try:
                 modify(x+pi,y+pj,color_to_int(pic.getpixel((pi,pj))),c.count)
             except:
@@ -74,7 +79,7 @@ def modify_to(pic,x,y):
             c.update()
         except:
             pass
-        time.sleep(1)
+        time.sleep(20)
 
 im=Image.open(sys.argv[1])
 im=im.convert('RGB')
