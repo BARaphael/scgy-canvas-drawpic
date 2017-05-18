@@ -61,16 +61,19 @@ def modify_to(pic,x,y):
         for i in range(pic.width):
             for j in range(pic.height):
                 if x+i>=0 and x+i<300 and y+j>=0 and y+j<300:
-                    if c.data[x+i][x+j]!=pic.getpixel((i,j)):
+                    if c.data[x+i][y+j]!=pic.getpixel((i,j)):
                         diffs.append((i,j))
         print("Diff count =",len(diffs))
         if diffs:
             pi,pj=random.choice(diffs)
             try:
                 modify(x+pi,y+pj,color_to_int(pic.getpixel((pi,pj))),c.count)
-                c.update()
             except:
                 pass
+        try:
+            c.update()
+        except:
+            pass
         time.sleep(1)
 
 im=Image.open(sys.argv[1])
