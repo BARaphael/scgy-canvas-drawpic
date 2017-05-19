@@ -39,13 +39,13 @@ def modify(x,y,color,count):
     #return
     url='http://canvas.ourscgy.ustc.edu.cn/canvas/modify'
     json={"canvas":[{"x":x,"y":y,"color":color}],"count":count}
-    r=requests.post(url,json=json,headers=headers,timeout=5)
+    r=requests.post(url,json=json,headers=headers,timeout=3)
     print(r.json())
     return r.json()
 
 def update(count):
     url='http://canvas.ourscgy.ustc.edu.cn/canvas/update'
-    r=requests.get(url,params={"count":count},headers=headers,timeout=5)
+    r=requests.get(url,params={"count":count},headers=headers,timeout=3 if count>0 else 20)
     return r.json()
 
 def color_to_int(color):
@@ -64,7 +64,7 @@ def modify_to(pic,x,y):
         for i in range(pic.width):
             for j in range(pic.height):
                 if x+i>=0 and x+i<300 and y+j>=0 and y+j<300:
-                    if c.data[x+i][y+j]!=pic.getpixel((i,j)):
+                    if c.data[x+i][y+j]!=pic.getpixel((i,j)) and pic.getpixel((i,j))!=(255,0,255):
                         diffs.append((i,j,diff(c.data[x+i][y+j],pic.getpixel((i,j)))))
         print("Diff count =",len(diffs))
         if diffs:
