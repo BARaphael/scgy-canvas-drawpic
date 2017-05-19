@@ -60,6 +60,10 @@ def diff(c1,c2):
 def modify_to(pic,x,y):
     c=Canvas()
     while True:
+        try:
+            c.update()
+        except:
+            pass
         diffs=[]
         for i in range(pic.width):
             for j in range(pic.height):
@@ -75,10 +79,6 @@ def modify_to(pic,x,y):
                 modify(x+pi,y+pj,color_to_int(pic.getpixel((pi,pj))),c.count)
             except:
                 pass
-        try:
-            c.update()
-        except:
-            pass
         time.sleep(20)
 
 im=Image.open(sys.argv[1])
