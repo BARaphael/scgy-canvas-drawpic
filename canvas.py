@@ -55,7 +55,7 @@ def int_to_color(n):
     return n>>16,(n>>8)%256,n%256
 
 def diff(c1,c2):
-    return abs(c1[0]-c2[0])+abs(c1[1]-c2[1])+abs(c1[2]-c2[2])
+    return max(0,c1[0]-c2[0])+max(0,c1[1]-c2[1])+max(0,c1[2]-c2[2])
 
 def modify_to(pic,x,y):
     c=Canvas()
