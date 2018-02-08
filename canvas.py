@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+
+
 # Usage:
 # canvas.py pic start_x start_y
 # canvas.py 1.jpg 0 0
